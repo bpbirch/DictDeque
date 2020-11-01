@@ -41,14 +41,15 @@ if __name__ == '__main__':
 
 class DictDeque:
     """
-    The goal of creating this dict-based queue strucutre was to achieve
-    O(1) performance on enqueueing and dequeueing from the front and back of a queue
-    A normal list-based deque has to sacrifice performance on one end or the other of a queue,
+    The goal of creating this dict-based deque strucutre was to achieve
+    O(1) performance on adding and removing from the front and back of a deque
+    A normal list-based deque has to sacrifice performance on one end or the other of a deque,
     while a dict-based deque does not
 
-    This structure begins by indexing the front of the queue to 1, and the rear to -1
-    If an item is added to the front, the front is indexed to -2
-    If an item is added to the back, then the rear is indexed to 2
+    This structure begins by indexing the front of the queue to 0, and the rear to 0
+    The value of self.items[0] is set to None so that we don't raise Key Errors down the road
+    If an item is added to the front, the front is indexed to -1
+    If an item is added to the back, then the rear is indexed to 1
     When an item is removed from the front, we increment the front's index by +1
     When an item is removed from the rear, we decrement the rear's index by -1
     Ultimately, this means that low numbers are at our 'front', and high numbers at our 'rear'
