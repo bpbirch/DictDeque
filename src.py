@@ -323,6 +323,7 @@ def findPalindromes(url):
     Returns:
         palindromes (dict): dictionary of key:value pairs of palindrome:count form
     """
+    
     words = gatherBook(url)
     words = [cleanse(word) for word in words]
     words = [word for word in words if len(word) > 1] # don't want single letter words
