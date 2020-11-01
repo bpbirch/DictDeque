@@ -57,9 +57,9 @@ class DictDeque:
     def __init__(self):
         self.items = {}
         self.high = 0
-        self.low = 0 # note this approach may cause a problem, since we could run
+        self.low = 0 
         self.items[self.low] = self.items[self.low] = None
-        # into a problem when trying to remove an item that self.items[0] does not exist
+        # setting the above value to None so we don't run into key errors in the future
     def addFront(self, item):
         self.low -= 1
         self.items[self.low] = item
