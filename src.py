@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
 class DictDeque:
     """
-    The goal of creating this dict-based deque strucutre was to achieve
+    The goal of creating this dict-based deque structure was to achieve
     O(1) performance on adding and removing from the front and back of a deque
     A normal list-based deque has to sacrifice performance on one end or the other of a deque,
     while a dict-based deque does not
