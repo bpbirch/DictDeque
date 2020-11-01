@@ -64,6 +64,11 @@ class DictDeque:
     def addRear(self, item):
         self.items[self.high] = item
         self.high += 1
+    def peekFront(self):
+        return self.items[self.low+1]
+        # since we increment after we assign keys, we have to use -1, +1 to access / manipulate keys
+    def peekRear(self):
+        return self.items[self.high-1]
     def removeFront(self):
         if not self.isEmpty():
             placeHolder = self.items[self.low+1] 
