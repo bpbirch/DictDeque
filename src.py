@@ -160,7 +160,7 @@ if __name__ == '__main__':
     # here we're goint to use matplotlib to pot differences in performance
     # interestingly, list-based queue actually seems to be O(n^2) performance,
     # while DictQueue is O(1)
-    nums = list(range(1000, 10000, 1000))
+    nums = list(range(1000, 100000, 10000))
     # add, front
     dTimes = []
     ddTimes = []
@@ -180,7 +180,7 @@ if __name__ == '__main__':
 #%%
 if __name__ == '__main__':
     # remove, front
-    nums = list(range(1000, 10000, 1000))
+    nums = list(range(1000, 100000, 10000))
     dTimes = []
     ddTimes = []
     d = Deque()
