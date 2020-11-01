@@ -290,6 +290,16 @@ if __name__ == '__main__':
 
 #%%
 def gatherBook(url):
+    """
+    Will create a list of words from a project gutenberg book file
+
+    Args:
+        url (str): string representing url of a project gutenberg text file 
+        eg: https://www.gutenberg.org/files/63588/63588-0.txt
+
+    Returns:
+        words (list): list of words from project gutenberg book
+    """
     with urllib.request.urlopen(url) as file_object:
         # *** demarcates actual text of book in gutenberg files
         words = file_object.read().decode('utf-8-sig').split('***')[2]
