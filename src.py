@@ -46,36 +46,36 @@ class DictDeque:
     A normal list-based deque has to sacrifice performance on one end or the other of a deque,
     while a dict-based deque does not
 
-    This structure begins by indexing the front of the queue to 0, and the rear to 0
+    This structure begins by indexing the front of the queue to 0, and the rear to 1
     The value of self.items[0] is set to None so that we don't raise Key Errors down the road
     If an item is added to the front, the front is indexed to -1
-    If an item is added to the back, then the rear is indexed to 1
+    If an item is added to the back, then the rear is indexed to 2
     When an item is removed from the front, we increment the front's index by +1
     When an item is removed from the rear, we decrement the rear's index by -1
     Ultimately, this means that low numbers are at our 'front', and high numbers at our 'rear'
     """
     def __init__(self):
         self.items = {}
-        self.high = 0
+        self.high = 1
         self.low = 0 
-        self.items[self.low] = self.items[self.low] = None
-        # setting the above value to None so we don't run into key errors in the future
     def addFront(self, item):
-        self.low -= 1
         self.items[self.low] = item
+        self.low -= 1
     def addRear(self, item):
-        self.high += 1
         self.items[self.high] = item
+        self.high += 1
     def removeFront(self):
         if not self.isEmpty():
-            placeHolder = self.items[self.low] 
-            del self.items[self.low]
+            placeHolder = self.items[self.low+1] 
+            del self.items[self.low+1] 
+            # since we increment AFTER we assign a key:value pair in addFront/Rear, 
+            # we have to delete based on previous index
             self.low += 1
             return placeHolder
     def removeRear(self):
         if not self.isEmpty():
-            placeHolder = self.items[self.high]
-            del self.items[self.high]
+            placeHolder = self.items[self.high-1]
+            del self.items[self.high-1]
             self.high -= 1
             return placeHolder
     def isEmpty(self):
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     # here we're goint to use matplotlib to pot differences in performance
     # interestingly, list-based queue actually seems to be O(n^2) performance,
     # while DictQueue is O(1)
-    nums = list(range(1000, 100000, 10000))
+    nums = list(range(1000, 10000, 1000))
     # add, front
     dTimes = []
     ddTimes = []
@@ -180,7 +180,7 @@ if __name__ == '__main__':
 #%%
 if __name__ == '__main__':
     # remove, front
-    nums = list(range(1000, 100000, 10000))
+    nums = list(range(1000, 10000, 1000))
     dTimes = []
     ddTimes = []
     d = Deque()
