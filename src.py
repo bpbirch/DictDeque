@@ -5,6 +5,8 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt 
+from string import whitespace, punctuation
+import urllib.request 
 #%%
 # Deque
 # writing vanilla list-based deque
@@ -235,3 +237,95 @@ if __name__ == '__main__':
     plt.legend()
     plt.show() # the actual performance of our DictDeque comes when removing or adding to rear
 
+#%%
+# using a deque for palindrome checking
+def palindromeDequeCheck(string):
+    """
+    Checks a string to determine whether it's a palindrome
+
+    Args:
+        string (str): string to be checked as palindrome
+
+    Returns:
+        stillOK (bool): bool specifying True for palindrome, False for not palindrome
+    """
+    dd = DictDeque()
+    stillOK = True
+    for c in string:
+        dd.addRear(c)
+    while dd.size() > 1 and stillOK:
+        if dd.peekFront() == dd.peekRear():
+            dd.removeFront()
+            dd.removeRear()
+        else:
+            stillOK = False
+    return stillOK
+
+print(palindromeDequeCheck('racecar'))
+
+#%%
+# will use cleanse for palindrome checking
+def cleanse(word):
+    '''
+    This function removes punctuation and whitespace from word,
+    the string that we pass as an argument
+
+    Args:
+    word (str): string we want to strip whitespace and punctuation from
+
+    Returns:
+    cleaned (str): word with whitespace and punctuation stripped
+    '''
+    cleaned = '' # we will only include non whitespace, non punctuation characters
+    for char in word:
+        if ((char in whitespace) or (char in punctuation)):
+            pass
+        else:
+            cleaned += char.lower()
+    return cleaned
+
+if __name__ == '__main__':
+    word = 'hey  th!ere?'
+    print(cleanse(word))
+
+#%%
+def gatherBook(url):
+    with urllib.request.urlopen(url) as file_object:
+        # *** demarcates actual text of book in gutenberg files
+        words = file_object.read().decode('utf-8-sig').split('***')[2]
+        words = words.split()
+    return words
+
+if __name__ =='__main__':
+    url = 'http://www.gutenberg.org/cache/epub/63393/pg63393.txt'
+    words = gatherBook(url)
+    print(words[:20])
+#%%
+# Writing a program that takes in a file, analyzes each word, and keeps a list of all palindromes
+def findPalindromes(url):
+    """
+    Analyzes a text book from project gutenberg, then returns a dictionary
+    of key:value pairs of palindrome:count form
+
+    Args:
+        url (str): url of project gutenberg book
+
+    Returns:
+        palindromes (dict): dictionary of key:value pairs of palindrome:count form
+    """
+    words = gatherBook(url)
+    words = [cleanse(word) for word in words]
+    words = [word for word in words if len(word) > 1] # don't want single letter words
+    palindromes = {}
+    
+    for word in words:
+        if palindromeDequeCheck(word):
+            if word not in palindromes:
+                palindromes[word] = 1
+            else:
+                palindromes[word] += 1
+    return palindromes
+
+if __name__ == '__main__':
+    pals = findPalindromes('http://www.gutenberg.org/cache/epub/63393/pg63393.txt')
+    print(pals)
